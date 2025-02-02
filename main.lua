@@ -24,7 +24,7 @@ return {
 					level = "info",
 				})
 			else
-				ya.clipboard(output.stdout)
+				ya.clipboard(output.stdout:gsub("[\r\n]", ""))
 				ya.notify({
 					title = "",
 					content = string.format("%s is copied", output.stdout),
