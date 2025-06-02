@@ -6,7 +6,7 @@ return {
 	entry = function()
 		local hovered_file_name = get_hovered_file()
 		local output, err =
-			Command("git"):args({ "ls-tree", "--full-name", "--name-only", "HEAD", hovered_file_name }):output()
+			Command("git"):arg({ "ls-tree", "--full-name", "--name-only", "HEAD", hovered_file_name }):output()
 
 		if output.stderr ~= "" then
 			ya.notify({
