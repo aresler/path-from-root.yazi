@@ -6,7 +6,7 @@ The target file needs to be in git index.
 # Install
 
 ```
-ya pack -a aresler/path-from-root
+ya pkg add aresler/path-from-root
 ```
 
 Then, add the mapping to `yazi/keymap.toml`:
