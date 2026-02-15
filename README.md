@@ -12,7 +12,7 @@ ya pkg add aresler/path-from-root
 Then, add the mapping to `yazi/keymap.toml`:
 
 ```
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = [ "c", "r" ]
 run = "plugin path-from-root"
 desc = "Copies path from git root"
