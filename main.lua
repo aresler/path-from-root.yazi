@@ -1,5 +1,6 @@
 local get_hovered_file = ya.sync(function()
-	return cx.active.current.hovered and cx.active.current.hovered.name or nil
+	local hovered = cx.active.current.hovered
+	return hovered and hovered.url
 end)
 
 local function trim_newlines(str)
@@ -17,21 +18,23 @@ end
 
 return {
 	entry = function()
-		local hovered_file_name = get_hovered_file()
+		local hovered_file = get_hovered_file()
 
-		if not hovered_file_name or hovered_file_name == "" then
+		if not hovered_file or hovered_file.name == "" then
 			notify("Nothing is copied. No hovered file", "warn")
 			return
 		end
 
-		local prefix, err = Command("git"):arg({ "rev-parse", "--show-prefix" }):output()
+		local cwd = hovered_file.parent
+
+		local prefix, err = Command("git"):arg({ "rev-parse", "--show-prefix" }):cwd(tostring(cwd)):output()
 		if not prefix or not prefix.status.success then
 			local error = err or prefix and prefix.stderr
 			notify(tostring(error), "error", "Error")
 			return
 		end
 
-		local relative_path = trim_newlines(prefix.stdout) .. hovered_file_name
+		local relative_path = trim_newlines(prefix.stdout) .. hovered_file.name
 		ya.clipboard(relative_path)
 		notify(string.format("%s is copied", relative_path))
 	end,
