@@ -24,13 +24,14 @@ return {
 			return
 		end
 
-		local prefix_output = Command("git"):arg({ "rev-parse", "--show-prefix" }):output()
-		if prefix_output.stderr ~= "" then
-			notify(prefix_output.stderr, "error", "Error")
+		local prefix, err = Command("git"):arg({ "rev-parse", "--show-prefix" }):output()
+		if not prefix or not prefix.status.success then
+			local error = err or prefix and prefix.stderr
+			notify(tostring(error), "error", "Error")
 			return
 		end
 
-		local relative_path = trim_newlines(prefix_output.stdout) .. hovered_file_name
+		local relative_path = trim_newlines(prefix.stdout) .. hovered_file_name
 		ya.clipboard(relative_path)
 		notify(string.format("%s is copied", relative_path))
 	end,
