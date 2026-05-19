@@ -24,13 +24,6 @@ return {
 			return
 		end
 
-		-- Ask git for repo root and current prefix so untracked files still work.
-		local root_output = Command("git"):arg({ "rev-parse", "--show-toplevel" }):output()
-		if root_output.stderr ~= "" or root_output.stdout == "" then
-			notify("Nothing is copied. Not inside a git repo", "warn")
-			return
-		end
-
 		local prefix_output = Command("git"):arg({ "rev-parse", "--show-prefix" }):output()
 		if prefix_output.stderr ~= "" then
 			notify(prefix_output.stderr, "error", "Error")
