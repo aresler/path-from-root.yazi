@@ -1,12 +1,17 @@
+--- @type fun(): Url|nil
 local get_hovered_file = ya.sync(function()
 	local hovered = cx.active.current.hovered
 	return hovered and hovered.url
 end)
 
+--- @param str string|nil
 local function trim_newlines(str)
 	return (str or ""):gsub("[\r\n]", "")
 end
 
+--- @param content string
+--- @param level? "info"|"warn"|"error"
+--- @param title? string
 local function notify(content, level, title)
 	ya.notify({
 		title = title or "",
