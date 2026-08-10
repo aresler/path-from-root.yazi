@@ -1,7 +1,9 @@
+
+
 # path-from-root
 
 A [yazi](https://github.com/sxyazi/yazi) mini-plugin to copy file path relative to git root.
-The target file needs to be in git index.
+The target file must be inside a git repository.
 
 # Install
 
